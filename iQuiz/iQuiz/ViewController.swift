@@ -18,6 +18,7 @@ class ViewController: UIViewController, UITableViewDataSource {
         cell.textLabel?.text = questions[indexPath.row]
         cell.detailTextLabel?.text = "This is description"
         cell.imageView?.image = UIImage(named: "placeHolder")
+        tableView.tableFooterView = UIView()
         return cell
     }
     
