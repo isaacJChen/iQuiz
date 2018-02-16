@@ -8,7 +8,18 @@
 
 import UIKit
 
-class ViewController: UIViewController, UITableViewDataSource {
+class ViewController: UIViewController , UITableViewDataSource, UITableViewDelegate{
+    
+    var numberOfQuestions = 0
+    var numberOfCompleted = 0
+    var numberOfCorrect = 0
+    
+    
+    fileprivate var questionView: QuestionViewController!
+    
+    
+    
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return questions.count
     }
@@ -20,6 +31,20 @@ class ViewController: UIViewController, UITableViewDataSource {
         cell.imageView?.image = UIImage(named: "placeHolder")
         tableView.tableFooterView = UIView()
         return cell
+    }
+    
+    fileprivate func switchViewController(_ from: UIViewController?, to: UIViewController?) {
+        if from != nil {
+            from!.willMove(toParentViewController: nil)
+            from!.view.removeFromSuperview()
+            from!.removeFromParentViewController()
+        }
+        
+        if to != nil {
+            self.addChildViewController(to!)
+            self.view.insertSubview(to!.view, at: 0)
+            to!.didMove(toParentViewController: self)
+        }
     }
     
 
@@ -59,6 +84,7 @@ class ViewController: UIViewController, UITableViewDataSource {
         ]
         
         table.dataSource = self
+        table.delegate = self
         
         NSLayoutConstraint.activate(tableConstraints)
         
@@ -86,16 +112,20 @@ class ViewController: UIViewController, UITableViewDataSource {
         self.present(alert, animated: true, completion: nil)
     }
     
-    
-    
-    
-    
-    
-    
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        numberOfQuestions = 3
+        let question = segue.destination as! QuestionViewController
+        NSLog("the number of questions is \(numberOfQuestions)")
+        NSLog("the number of completed is \(numberOfCompleted)")
+        question.numberOfQuestions = numberOfQuestions
+        question.numberOfCompleted = numberOfCompleted
+        question.numberOfCorrect = numberOfCorrect
     }
 
 

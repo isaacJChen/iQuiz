@@ -30,7 +30,7 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="LabelCell" textLabel="MMK-og-GJz" detailTextLabel="EFb-8D-tpX" style="IBUITableViewCellStyleSubtitle" id="4FH-Zp-yfh">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="LabelCell" textLabel="MMK-og-GJz" detailTextLabel="EFb-8D-tpX" style="IBUITableViewCellStyleSubtitle" id="4FH-Zp-yfh">
                                         <rect key="frame" x="0.0" y="28" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="4FH-Zp-yfh" id="5mm-tU-1cJ">
@@ -53,6 +53,9 @@
                                                 </label>
                                             </subviews>
                                         </tableViewCellContentView>
+                                        <connections>
+                                            <segue destination="4yp-Ig-Fz1" kind="show" identifier="mainToQuestion" animates="NO" id="JRL-XV-UlS"/>
+                                        </connections>
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
@@ -87,10 +90,22 @@
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fs6-S1-n2X">
                                 <rect key="frame" x="0.0" y="617" width="375" height="30"/>
                                 <state key="normal" title="OK"/>
+                                <connections>
+                                    <segue destination="BYZ-38-t0r" kind="show" identifier="finishToMain" animates="NO" id="Uu8-pI-auK"/>
+                                </connections>
                             </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oVT-ok-QQR">
+                                <rect key="frame" x="-0.5" y="333" width="375" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
+                            <constraint firstItem="oVT-ok-QQR" firstAttribute="centerX" secondItem="xWf-8J-IZD" secondAttribute="centerX" id="2UX-4Q-uRi"/>
+                            <constraint firstItem="oVT-ok-QQR" firstAttribute="centerY" secondItem="xWf-8J-IZD" secondAttribute="centerY" id="8VZ-t2-cW6"/>
+                            <constraint firstItem="oVT-ok-QQR" firstAttribute="width" secondItem="1Jg-kr-wWH" secondAttribute="width" id="ADQ-B1-hP5"/>
                             <constraint firstItem="iXS-er-XaI" firstAttribute="top" secondItem="xWf-8J-IZD" secondAttribute="top" id="Dl3-tm-hA2"/>
                             <constraint firstItem="iXS-er-XaI" firstAttribute="width" secondItem="1Jg-kr-wWH" secondAttribute="width" id="KMj-NA-RDq"/>
                             <constraint firstItem="iXS-er-XaI" firstAttribute="centerX" secondItem="xWf-8J-IZD" secondAttribute="centerX" id="b88-uk-Cvy"/>
@@ -100,6 +115,9 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="xWf-8J-IZD"/>
                     </view>
+                    <connections>
+                        <outlet property="label" destination="oVT-ok-QQR" id="wLQ-qA-cbg"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="AAL-67-hWl" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -108,7 +126,7 @@
         <!--Question View Controller-->
         <scene sceneID="t42-4u-gLE">
             <objects>
-                <viewController id="4yp-Ig-Fz1" customClass="QuestionViewController" customModule="iQuiz" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="questions" id="4yp-Ig-Fz1" customClass="QuestionViewController" customModule="iQuiz" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="De4-f8-IEY">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -152,17 +170,28 @@
                                     </button>
                                 </subviews>
                             </stackView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Fd7-jG-gZc">
+                            <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Fd7-jG-gZc">
                                 <rect key="frame" x="0.0" y="617" width="375" height="30"/>
                                 <state key="normal" title="Submit"/>
                                 <connections>
                                     <action selector="sbumitPRessed:" destination="4yp-Ig-Fz1" eventType="touchUpInside" id="gvl-SR-k2h"/>
+                                    <segue destination="AYj-ux-r1L" kind="show" identifier="questionToAnswer" animates="NO" id="Ded-iD-QXd"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VSl-BC-NQ4">
+                                <rect key="frame" x="28" y="20" width="34" height="30"/>
+                                <state key="normal" title="Back"/>
+                                <connections>
+                                    <action selector="backIsPressed:" destination="4yp-Ig-Fz1" eventType="touchUpInside" id="vtB-1S-036"/>
+                                    <segue destination="BYZ-38-t0r" kind="show" animates="NO" id="HBp-iG-psI"/>
                                 </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <gestureRecognizers/>
                         <constraints>
                             <constraint firstItem="Fd7-jG-gZc" firstAttribute="width" secondItem="De4-f8-IEY" secondAttribute="width" id="3yF-G2-KEJ"/>
+                            <constraint firstItem="Hjy-67-tph" firstAttribute="leading" secondItem="VSl-BC-NQ4" secondAttribute="trailing" constant="-62" id="7Jf-oq-Yl2"/>
                             <constraint firstItem="Fd7-jG-gZc" firstAttribute="centerX" secondItem="GAB-3x-SKb" secondAttribute="centerX" id="AyH-gT-0yf"/>
                             <constraint firstItem="Hjy-67-tph" firstAttribute="width" secondItem="De4-f8-IEY" secondAttribute="width" id="GeL-zX-byL"/>
                             <constraint firstItem="Jeb-gQ-M97" firstAttribute="centerX" secondItem="GAB-3x-SKb" secondAttribute="centerX" id="cRH-Fo-eEx"/>
@@ -171,13 +200,30 @@
                             <constraint firstItem="Jeb-gQ-M97" firstAttribute="centerY" secondItem="GAB-3x-SKb" secondAttribute="centerY" id="lBn-xa-urZ"/>
                             <constraint firstItem="GAB-3x-SKb" firstAttribute="bottom" secondItem="Fd7-jG-gZc" secondAttribute="bottom" constant="20" id="rr3-XV-51f"/>
                             <constraint firstItem="Hjy-67-tph" firstAttribute="top" secondItem="GAB-3x-SKb" secondAttribute="top" id="syF-Ei-eX2"/>
+                            <constraint firstItem="VSl-BC-NQ4" firstAttribute="top" secondItem="GAB-3x-SKb" secondAttribute="top" id="xab-w2-Zie"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="GAB-3x-SKb"/>
+                        <connections>
+                            <outletCollection property="gestureRecognizers" destination="0LO-4u-oO6" appends="YES" id="NjJ-lt-6Nn"/>
+                        </connections>
                     </view>
+                    <connections>
+                        <outlet property="correctAnswer" destination="QcE-ab-M63" id="rdj-W0-Q6t"/>
+                        <outlet property="submit" destination="Fd7-jG-gZc" id="erL-Fk-P14"/>
+                        <outlet property="swpie" destination="0LO-4u-oO6" id="46a-Fs-r8c"/>
+                        <outlet property="wrongAnswer1" destination="KMS-pf-gB3" id="mbx-IP-QYb"/>
+                        <outlet property="wrongAnswer2" destination="k2F-5S-c8F" id="OMl-PB-iYz"/>
+                        <outlet property="wrongAnswer4" destination="GCJ-hX-93r" id="Ek5-Mj-IwM"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="w8s-Hy-ydu" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <swipeGestureRecognizer enabled="NO" direction="right" id="0LO-4u-oO6">
+                    <connections>
+                        <segue destination="AYj-ux-r1L" kind="show" animates="NO" id="cac-LE-27K"/>
+                    </connections>
+                </swipeGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="32" y="780"/>
+            <point key="canvasLocation" x="-666" y="985"/>
         </scene>
         <!--Answer View Controller-->
         <scene sceneID="921-Uc-LK7">
@@ -196,32 +242,64 @@
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="b5e-cn-mRm">
                                 <rect key="frame" x="0.0" y="617" width="375" height="30"/>
                                 <state key="normal" title="Next"/>
+                                <connections>
+                                    <action selector="nextPressed:" destination="AYj-ux-r1L" eventType="touchUpInside" id="Y8z-UY-SF0"/>
+                                </connections>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="The correct answer is &quot;The Correct Answer&quot;" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QeU-JC-X8o">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="The correct answer is &quot;The Correct Answer&quot;" textAlignment="center" lineBreakMode="wordWrap" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QeU-JC-X8o">
                                 <rect key="frame" x="0.0" y="333" width="375" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hhp-7X-sQ9">
+                                <rect key="frame" x="28" y="20" width="34" height="30"/>
+                                <state key="normal" title="Back"/>
+                                <connections>
+                                    <action selector="backPressed:" destination="AYj-ux-r1L" eventType="touchUpInside" id="Qcw-l6-F12"/>
+                                    <segue destination="BYZ-38-t0r" kind="show" animates="NO" id="XFk-OO-juJ"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <gestureRecognizers/>
                         <constraints>
                             <constraint firstItem="w8i-Ri-1hF" firstAttribute="top" secondItem="sNu-Qw-XYr" secondAttribute="top" id="Fc1-Ua-m6s"/>
                             <constraint firstItem="QeU-JC-X8o" firstAttribute="centerY" secondItem="sNu-Qw-XYr" secondAttribute="centerY" id="If6-Md-o3E"/>
                             <constraint firstItem="sNu-Qw-XYr" firstAttribute="bottom" secondItem="b5e-cn-mRm" secondAttribute="bottom" constant="20" id="Qii-70-qWZ"/>
+                            <constraint firstItem="w8i-Ri-1hF" firstAttribute="leading" secondItem="hhp-7X-sQ9" secondAttribute="trailing" constant="-62" id="Y0l-vo-clI"/>
                             <constraint firstItem="QeU-JC-X8o" firstAttribute="width" secondItem="qm2-UF-vz4" secondAttribute="width" id="b0p-65-PFv"/>
                             <constraint firstItem="w8i-Ri-1hF" firstAttribute="width" secondItem="qm2-UF-vz4" secondAttribute="width" id="dRI-zw-xHm"/>
                             <constraint firstItem="b5e-cn-mRm" firstAttribute="width" secondItem="qm2-UF-vz4" secondAttribute="width" id="gpd-g4-GSd"/>
                             <constraint firstItem="w8i-Ri-1hF" firstAttribute="centerX" secondItem="sNu-Qw-XYr" secondAttribute="centerX" id="gqM-Pg-gX8"/>
                             <constraint firstItem="b5e-cn-mRm" firstAttribute="centerX" secondItem="sNu-Qw-XYr" secondAttribute="centerX" id="hCG-VJ-9gt"/>
+                            <constraint firstItem="hhp-7X-sQ9" firstAttribute="top" secondItem="sNu-Qw-XYr" secondAttribute="top" id="zfl-Ih-rVh"/>
                             <constraint firstItem="QeU-JC-X8o" firstAttribute="centerX" secondItem="sNu-Qw-XYr" secondAttribute="centerX" id="zss-T3-r8c"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="sNu-Qw-XYr"/>
+                        <connections>
+                            <outletCollection property="gestureRecognizers" destination="tzQ-bd-ELH" appends="YES" id="kRN-fg-XRM"/>
+                        </connections>
                     </view>
+                    <connections>
+                        <outlet property="label" destination="QeU-JC-X8o" id="LOW-ud-Jow"/>
+                        <segue destination="4yp-Ig-Fz1" kind="show" identifier="answerToQuestion" animates="NO" id="NAW-UQ-kxi"/>
+                        <segue destination="rWN-ov-aKf" kind="show" identifier="answerToFinish" animates="NO" id="d13-Xw-9zV"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="hOS-bw-zyo" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <swipeGestureRecognizer direction="right" id="tzQ-bd-ELH">
+                    <connections>
+                        <action selector="nextPressed:" destination="AYj-ux-r1L" id="5aR-St-dfu"/>
+                    </connections>
+                </swipeGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="805.60000000000002" y="776.76161919040487"/>
+            <point key="canvasLocation" x="724" y="907"/>
         </scene>
     </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="cac-LE-27K"/>
+        <segue reference="NAW-UQ-kxi"/>
+        <segue reference="HBp-iG-psI"/>
+    </inferredMetricsTieBreakers>
 </document>

@@ -9,9 +9,20 @@
 import UIKit
 
 class FinishedViewController: UIViewController {
+    
+    @IBOutlet weak var label: UILabel!
+    var numberOfQuestions = 0
+    var numberOfCorrect = 0
 
     override func viewDidLoad() {
+        var percentage:Double
         super.viewDidLoad()
+        if numberOfCorrect == 0 {
+            percentage = 0.0
+        } else {
+            percentage = Double(round(Double(numberOfCorrect)/Double(numberOfQuestions)*10000)/100)
+        }
+        label.text = "You got \(percentage)% correct"
 
         // Do any additional setup after loading the view.
     }
