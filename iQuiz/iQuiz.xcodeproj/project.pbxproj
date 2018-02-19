@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		F8161897203AAE1C00251940 /* URLParsing.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8161896203AAE1C00251940 /* URLParsing.swift */; };
+		F8161899203AD65D00251940 /* Reachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8161898203AD65D00251940 /* Reachability.swift */; };
 		F897916E20311ECF00C8C714 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F897916D20311ECF00C8C714 /* AppDelegate.swift */; };
 		F897917020311ECF00C8C714 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F897916F20311ECF00C8C714 /* ViewController.swift */; };
 		F897917320311ECF00C8C714 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F897917120311ECF00C8C714 /* Main.storyboard */; };
@@ -37,6 +39,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		F8161896203AAE1C00251940 /* URLParsing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLParsing.swift; sourceTree = "<group>"; };
+		F8161898203AD65D00251940 /* Reachability.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Reachability.swift; sourceTree = "<group>"; };
 		F897916A20311ECF00C8C714 /* iQuiz.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iQuiz.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F897916D20311ECF00C8C714 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		F897916F20311ECF00C8C714 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -103,6 +107,7 @@
 		F897916C20311ECF00C8C714 /* iQuiz */ = {
 			isa = PBXGroup;
 			children = (
+				F8161896203AAE1C00251940 /* URLParsing.swift */,
 				F897916D20311ECF00C8C714 /* AppDelegate.swift */,
 				F897916F20311ECF00C8C714 /* ViewController.swift */,
 				F897917120311ECF00C8C714 /* Main.storyboard */,
@@ -112,6 +117,7 @@
 				F897917420311ECF00C8C714 /* Assets.xcassets */,
 				F897917620311ECF00C8C714 /* LaunchScreen.storyboard */,
 				F897917920311ECF00C8C714 /* Info.plist */,
+				F8161898203AD65D00251940 /* Reachability.swift */,
 			);
 			path = iQuiz;
 			sourceTree = "<group>";
@@ -268,10 +274,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F8161899203AD65D00251940 /* Reachability.swift in Sources */,
 				F89791D82033871600C8C714 /* AnswerViewController.swift in Sources */,
 				F897917020311ECF00C8C714 /* ViewController.swift in Sources */,
 				F897916E20311ECF00C8C714 /* AppDelegate.swift in Sources */,
 				F89791D62033869600C8C714 /* QuestionViewController.swift in Sources */,
+				F8161897203AAE1C00251940 /* URLParsing.swift in Sources */,
 				F89791DA2033874300C8C714 /* FinishedViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

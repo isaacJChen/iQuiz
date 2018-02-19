@@ -15,8 +15,11 @@ class AnswerViewController: UIViewController {
     var numberOfQuestions = 0
     var numberOfCorrect = 0
     var isBacking = false
+    var questions:[Question] = []
 
     @IBOutlet weak var label: UILabel!
+    
+    @IBOutlet weak var questionLabel: UILabel!
     
     @IBAction func backPressed(_ sender: Any) {
         isBacking = true
@@ -36,6 +39,7 @@ class AnswerViewController: UIViewController {
         // Do any additional setup after loading the view.
         label.text = result
         label.numberOfLines = 0
+        questionLabel.text = questions[numberOfCompleted-1].text
     }
 
     override func didReceiveMemoryWarning() {
@@ -56,8 +60,6 @@ class AnswerViewController: UIViewController {
     
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        NSLog("the number of questions is \(numberOfQuestions)")
-        NSLog("the number of completed is \(numberOfCompleted)")
         if !isBacking{
             if numberOfCompleted == numberOfQuestions {
                 let finished = segue.destination as! FinishedViewController
@@ -68,6 +70,7 @@ class AnswerViewController: UIViewController {
                 question.numberOfCompleted = numberOfCompleted
                 question.numberOfQuestions = numberOfQuestions
                 question.numberOfCorrect = numberOfCorrect
+                question.questions = questions
             }
         }
     }

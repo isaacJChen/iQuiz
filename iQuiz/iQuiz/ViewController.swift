@@ -8,29 +8,40 @@
 
 import UIKit
 
+
 class ViewController: UIViewController , UITableViewDataSource, UITableViewDelegate{
+    
+    var quizType = 0
     
     var numberOfQuestions = 0
     var numberOfCompleted = 0
     var numberOfCorrect = 0
+    
+    var quizes: [Quiz] = []
     
     
     fileprivate var questionView: QuestionViewController!
     
     
     
-    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return questions.count
+        return quizes.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "LabelCell", for: indexPath)
-        cell.textLabel?.text = questions[indexPath.row]
-        cell.detailTextLabel?.text = "This is description"
-        cell.imageView?.image = UIImage(named: "placeHolder")
+        cell.textLabel?.text = self.quizes[indexPath.row].title
+        cell.detailTextLabel?.text = self.quizes[indexPath.row].desc
+        cell.imageView?.image = (UIImage(named: self.quizes[indexPath.row].title) != nil) ? UIImage(named: self.quizes[indexPath.row].title) : UIImage(named: "placeHolder")
         tableView.tableFooterView = UIView()
+        
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath){
+        quizType = indexPath.row
+        performSegue(withIdentifier: "mainToQuestion", sender: self)
+        print("pressed")
     }
     
     fileprivate func switchViewController(_ from: UIViewController?, to: UIViewController?) {
@@ -88,6 +99,43 @@ class ViewController: UIViewController , UITableViewDataSource, UITableViewDeleg
         
         NSLayoutConstraint.activate(tableConstraints)
         
+        
+        if Reachability.isConnectedToNetwork() {
+            
+            //url block
+            guard let url = URL(string: "http://tednewardsandbox.site44.com/questions.json") else {return}
+            
+            URLSession.shared.dataTask(with: url) { (data, response, err) in
+                guard let data = data else {return}
+                do{
+                    let temp = try JSONDecoder().decode([Quiz].self, from: data)
+                    self.quizes = temp
+                } catch let jsonErr{
+                    print("error for json parsing", jsonErr)
+                }
+                
+                DispatchQueue.main.async{
+                    self.table.reloadData()
+                }
+                
+                let test = ["a","b"]
+                
+                if (test as NSArray).write(toFile: NSHomeDirectory() + "/Documents/data", atomically: true) {
+                    print("did it")
+                } else {
+                    print("failed to write")
+                }
+                
+                }.resume()
+        } else {
+            
+            let alert = UIAlertController(title: "No Internet Connection!", message: "Will now use local data.", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: "Default action"), style: .`default`, handler: { _ in
+                NSLog("The \"OK\" alert occured.")
+            }))
+            self.present(alert, animated: true, completion: nil)
+        }
+        
     }
     
 
@@ -98,7 +146,6 @@ class ViewController: UIViewController , UITableViewDataSource, UITableViewDeleg
     
     //table stuff
     var tableConstraints:[NSLayoutConstraint] = []
-    var questions = ["Mathematics", "Marvel Super Heroes", "Science"]
     @IBOutlet weak var table: UITableView!
     
     //settings stuff
@@ -119,13 +166,11 @@ class ViewController: UIViewController , UITableViewDataSource, UITableViewDeleg
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        numberOfQuestions = 3
         let question = segue.destination as! QuestionViewController
-        NSLog("the number of questions is \(numberOfQuestions)")
-        NSLog("the number of completed is \(numberOfCompleted)")
-        question.numberOfQuestions = numberOfQuestions
+        question.numberOfQuestions = quizes[quizType].questions.count
         question.numberOfCompleted = numberOfCompleted
         question.numberOfCorrect = numberOfCorrect
+        question.questions = quizes[quizType].questions
     }
 
 

@@ -25,6 +25,9 @@ class QuestionViewController: UIViewController {
     var numberOfCompleted = 0
     var numberOfCorrect = 0
     
+    @IBOutlet weak var lebel: UILabel!
+    var questions:[Question] = []
+    
     var isBacking = false
     
     
@@ -37,8 +40,14 @@ class QuestionViewController: UIViewController {
         wrongAnswer1.backgroundColor = UIColor.cyan
         wrongAnswer2.backgroundColor = UIColor.cyan
         wrongAnswer4.backgroundColor = UIColor.cyan
-        self.result = "correct, YAY!!!!! the correct answer is: \(correctAnswer.currentTitle!)"
-        isCorrect = true
+        
+        isCorrect = questions[numberOfCompleted].answer == "1"
+        if isCorrect {
+            self.result = "correct, YAY!!!!! the correct answer is: \(questions[numberOfCompleted].answers[Int(questions[numberOfCompleted].answer)!-1])"
+        } else {
+            self.result = "incorrect, the correct answer is: \(questions[numberOfCompleted].answers[Int(questions[numberOfCompleted].answer)!-1])"
+        }
+        
         submit.isEnabled = true
         swpie.isEnabled = true
     }
@@ -48,8 +57,12 @@ class QuestionViewController: UIViewController {
         wrongAnswer1.backgroundColor = UIColor.lightGray
         wrongAnswer2.backgroundColor = UIColor.cyan
         wrongAnswer4.backgroundColor = UIColor.cyan
-        self.result = "incorrect, the correct answer is: \(correctAnswer.currentTitle!)"
-        isCorrect = false
+        isCorrect = questions[numberOfCompleted].answer == "2"
+        if isCorrect {
+            self.result = "correct, YAY!!!!! the correct answer is: \(questions[numberOfCompleted].answers[Int(questions[numberOfCompleted].answer)!-1])"
+        } else {
+            self.result = "incorrect, the correct answer is: \(questions[numberOfCompleted].answers[Int(questions[numberOfCompleted].answer)!-1])"
+        }
         submit.isEnabled = true
         swpie.isEnabled = true
     }
@@ -59,8 +72,12 @@ class QuestionViewController: UIViewController {
         wrongAnswer1.backgroundColor = UIColor.cyan
         wrongAnswer2.backgroundColor = UIColor.lightGray
         wrongAnswer4.backgroundColor = UIColor.cyan
-        self.result = "incorrect, the correct answer is: \(correctAnswer.currentTitle!)"
-        isCorrect = false
+        isCorrect = questions[numberOfCompleted].answer == "3"
+        if isCorrect {
+            self.result = "correct, YAY!!!!! the correct answer is: \(questions[numberOfCompleted].answers[Int(questions[numberOfCompleted].answer)!-1])"
+        } else {
+            self.result = "incorrect, the correct answer is: \(questions[numberOfCompleted].answers[Int(questions[numberOfCompleted].answer)!-1])"
+        }
         submit.isEnabled = true
         swpie.isEnabled = true
     }
@@ -70,8 +87,12 @@ class QuestionViewController: UIViewController {
         wrongAnswer1.backgroundColor = UIColor.cyan
         wrongAnswer2.backgroundColor = UIColor.cyan
         wrongAnswer4.backgroundColor = UIColor.lightGray
-        self.result = "incorrect, the correct answer is: \(correctAnswer.currentTitle!)"
-        isCorrect = false
+        isCorrect = questions[numberOfCompleted].answer == "4"
+        if isCorrect {
+            self.result = "correct, YAY!!!!! the correct answer is: \(questions[numberOfCompleted].answers[Int(questions[numberOfCompleted].answer)!-1])"
+        } else {
+            self.result = "incorrect, the correct answer is: \(questions[numberOfCompleted].answers[Int(questions[numberOfCompleted].answer)!-1])"
+        }
         submit.isEnabled = true
         swpie.isEnabled = true
     }
@@ -90,6 +111,12 @@ class QuestionViewController: UIViewController {
         wrongAnswer1.backgroundColor = UIColor.cyan
         wrongAnswer2.backgroundColor = UIColor.cyan
         wrongAnswer4.backgroundColor = UIColor.cyan
+        
+        correctAnswer.setTitle(questions[numberOfCompleted].answers[0], for: .normal)
+        wrongAnswer1.setTitle(questions[numberOfCompleted].answers[1], for: .normal)
+        wrongAnswer2.setTitle(questions[numberOfCompleted].answers[2], for: .normal)
+        wrongAnswer4.setTitle(questions[numberOfCompleted].answers[3], for: .normal)
+        lebel.text = questions[numberOfCompleted].text
     }
 
     override func didReceiveMemoryWarning() {
@@ -118,6 +145,7 @@ class QuestionViewController: UIViewController {
             answer.numberOfCompleted = numberOfCompleted
             answer.numberOfQuestions = numberOfQuestions
             answer.numberOfCorrect = isCorrect ? numberOfCorrect + 1 : numberOfCorrect
+            answer.questions = questions
         }
     }
 

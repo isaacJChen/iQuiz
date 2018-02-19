@@ -53,9 +53,6 @@
                                                 </label>
                                             </subviews>
                                         </tableViewCellContentView>
-                                        <connections>
-                                            <segue destination="4yp-Ig-Fz1" kind="show" identifier="mainToQuestion" animates="NO" id="JRL-XV-UlS"/>
-                                        </connections>
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
@@ -67,11 +64,12 @@
                         <outlet property="settings" destination="mJR-Yu-W5k" id="3vv-Cd-F4R"/>
                         <outlet property="table" destination="Pjm-q4-nG5" id="p4b-Xc-spm"/>
                         <outlet property="toolBar" destination="xvw-tF-bqJ" id="tJm-AS-abn"/>
+                        <segue destination="4yp-Ig-Fz1" kind="show" identifier="mainToQuestion" animates="NO" id="Kwh-CA-EjY"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="32.799999999999997" y="33.733133433283363"/>
+            <point key="canvasLocation" x="-566" y="213"/>
         </scene>
         <!--Finished View Controller-->
         <scene sceneID="Xad-HS-o6v">
@@ -209,6 +207,7 @@
                     </view>
                     <connections>
                         <outlet property="correctAnswer" destination="QcE-ab-M63" id="rdj-W0-Q6t"/>
+                        <outlet property="lebel" destination="Hjy-67-tph" id="BjU-z2-tVn"/>
                         <outlet property="submit" destination="Fd7-jG-gZc" id="erL-Fk-P14"/>
                         <outlet property="swpie" destination="0LO-4u-oO6" id="46a-Fs-r8c"/>
                         <outlet property="wrongAnswer1" destination="KMS-pf-gB3" id="mbx-IP-QYb"/>
@@ -283,6 +282,7 @@
                     </view>
                     <connections>
                         <outlet property="label" destination="QeU-JC-X8o" id="LOW-ud-Jow"/>
+                        <outlet property="questionLabel" destination="w8i-Ri-1hF" id="uFQ-9x-VzZ"/>
                         <segue destination="4yp-Ig-Fz1" kind="show" identifier="answerToQuestion" animates="NO" id="NAW-UQ-kxi"/>
                         <segue destination="rWN-ov-aKf" kind="show" identifier="answerToFinish" animates="NO" id="d13-Xw-9zV"/>
                     </connections>
@@ -300,6 +300,6 @@
     <inferredMetricsTieBreakers>
         <segue reference="cac-LE-27K"/>
         <segue reference="NAW-UQ-kxi"/>
-        <segue reference="HBp-iG-psI"/>
+        <segue reference="XFk-OO-juJ"/>
     </inferredMetricsTieBreakers>
 </document>
