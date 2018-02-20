@@ -12,34 +12,51 @@ struct Quiz: Decodable{
     let title: String
     let desc: String
     let questions: [Question]
-    
-    var dictionary: [String:Any] {
-        return [
-            "title": title,
-            "desc": desc,
-            "questions": questions
-        ]
-    }
-    
-    var getNSDict: NSDictionary {
-        return dictionary as NSDictionary
-    }
 }
 
 struct Question: Decodable{
     let text: String
     let answer: String
     let answers: [String]
-    
-    var dictionary: [String: Any] {
-        return [
-            "text": text,
-            "answer": answer,
-            "answers": answers
-        ]
+}
+
+class EncoderForJSON{
+    static func encodeQuestions(questions:[Question]) -> NSArray{
+        var returnedArray:[NSDictionary] = []
+        questions.forEach { (question) in
+            var dict: [String:Any] = [:]
+            dict["text"] = question.text
+            dict["answer"] = question.answer
+            dict["answers"] = question.answers
+            returnedArray.append(dict as NSDictionary)
+        }
+        
+        return returnedArray as NSArray
     }
     
-    var getNSDict: NSDictionary {
-        return dictionary as NSDictionary
+    static func encodeQuizes(quizes:[Quiz]) -> NSArray{
+        var returnedArray:[NSDictionary] = []
+        quizes.forEach { (quiz) in
+            var dict: [String:Any] = [:]
+            dict["title"] = quiz.title
+            dict["desc"] = quiz.desc
+            dict["questions"] = encodeQuestions(questions: quiz.questions)
+            returnedArray.append(dict as NSDictionary)
+        }
+        
+        return returnedArray as NSArray
     }
+    
+    static func toJSONData(from array:NSArray) -> Data? {
+        do {
+            //Convert to Data
+            let jsonData = try JSONSerialization.data(withJSONObject: array, options: JSONSerialization.WritingOptions.prettyPrinted)
+            return jsonData
+            
+        } catch {
+            print("failed")
+            return nil
+        }
+    }
+    
 }

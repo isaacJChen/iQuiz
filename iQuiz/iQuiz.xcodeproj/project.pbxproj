@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		F8161897203AAE1C00251940 /* URLParsing.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8161896203AAE1C00251940 /* URLParsing.swift */; };
 		F8161899203AD65D00251940 /* Reachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8161898203AD65D00251940 /* Reachability.swift */; };
+		F816189B203B9D2000251940 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = F816189A203B9D1F00251940 /* Settings.bundle */; };
 		F897916E20311ECF00C8C714 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F897916D20311ECF00C8C714 /* AppDelegate.swift */; };
 		F897917020311ECF00C8C714 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F897916F20311ECF00C8C714 /* ViewController.swift */; };
 		F897917320311ECF00C8C714 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F897917120311ECF00C8C714 /* Main.storyboard */; };
@@ -41,6 +42,7 @@
 /* Begin PBXFileReference section */
 		F8161896203AAE1C00251940 /* URLParsing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLParsing.swift; sourceTree = "<group>"; };
 		F8161898203AD65D00251940 /* Reachability.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Reachability.swift; sourceTree = "<group>"; };
+		F816189A203B9D1F00251940 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		F897916A20311ECF00C8C714 /* iQuiz.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iQuiz.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F897916D20311ECF00C8C714 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		F897916F20311ECF00C8C714 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -118,6 +120,7 @@
 				F897917620311ECF00C8C714 /* LaunchScreen.storyboard */,
 				F897917920311ECF00C8C714 /* Info.plist */,
 				F8161898203AD65D00251940 /* Reachability.swift */,
+				F816189A203B9D1F00251940 /* Settings.bundle */,
 			);
 			path = iQuiz;
 			sourceTree = "<group>";
@@ -247,6 +250,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F816189B203B9D2000251940 /* Settings.bundle in Resources */,
 				F897917820311ECF00C8C714 /* LaunchScreen.storyboard in Resources */,
 				F897917520311ECF00C8C714 /* Assets.xcassets in Resources */,
 				F897917320311ECF00C8C714 /* Main.storyboard in Resources */,

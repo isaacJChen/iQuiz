@@ -19,6 +19,9 @@ class ViewController: UIViewController , UITableViewDataSource, UITableViewDeleg
     
     var quizes: [Quiz] = []
     
+    var connectionStatus = true
+    
+    let defaultURL = UserDefaults.standard.string(forKey: "urltouse") == nil ? "http://tednewardsandbox.site44.com/questions.json" : UserDefaults.standard.string(forKey: "urltouse")!
     
     fileprivate var questionView: QuestionViewController!
     
@@ -41,7 +44,6 @@ class ViewController: UIViewController , UITableViewDataSource, UITableViewDeleg
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath){
         quizType = indexPath.row
         performSegue(withIdentifier: "mainToQuestion", sender: self)
-        print("pressed")
     }
     
     fileprivate func switchViewController(_ from: UIViewController?, to: UIViewController?) {
@@ -103,39 +105,81 @@ class ViewController: UIViewController , UITableViewDataSource, UITableViewDeleg
         if Reachability.isConnectedToNetwork() {
             
             //url block
-            guard let url = URL(string: "http://tednewardsandbox.site44.com/questions.json") else {return}
+            guard let url = URL(string: defaultURL) else {return}
             
             URLSession.shared.dataTask(with: url) { (data, response, err) in
-                guard let data = data else {return}
+                if data == nil {
+                    print("fail here!")
+                } else {
+                    guard let data = data else {return}
+                    do{
+                        let temp = try JSONDecoder().decode([Quiz].self, from: data)
+                        print(temp)
+                        self.quizes = temp
+                        
+                        
+                        DispatchQueue.main.async{
+                            self.table.reloadData()
+                        }
+                        
+                        let writable = EncoderForJSON.encodeQuizes(quizes: self.quizes)
+                        
+                        if (writable as NSArray).write(toFile: NSHomeDirectory() + "/Documents/data", atomically: true) {
+                            //let testArr = NSArray(contentsOfFile: NSHomeDirectory() + "/Documents/data")
+                        } else {
+                            print("failed to write")
+                        }
+                    } catch let jsonErr{
+                        print("error for json parsing", jsonErr)
+                    }
+                }
+                
+                
+            }.resume()
+        } else {
+            connectionStatus = false
+            
+            //let localData = NSArray(contentsOfFile: NSHomeDirectory() + "/Documents/data")
+            
+            
+        }
+        
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        
+        let localData = NSArray(contentsOfFile: NSHomeDirectory() + "/Documents/data")
+        
+        if !connectionStatus {
+            //let localData = NSArray(contentsOfFile: NSHomeDirectory() + "/Documents/data")
+            //print(EncoderForJSON.toJSON(from:localData!))
+            //print("no internet")
+            
+            if localData == nil{
+                let alert = UIAlertController(title: "No Internet Connection!", message: "Connection is required for first launch of the app", preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: "Default action"), style: .`default`, handler: { _ in
+                    NSLog("The \"OK\" alert occured.")
+                }))
+                self.present(alert, animated: true, completion: nil)
+            } else {
+                
+                let data = EncoderForJSON.toJSONData(from: localData!)
+                
                 do{
-                    let temp = try JSONDecoder().decode([Quiz].self, from: data)
+                    let temp = try JSONDecoder().decode([Quiz].self, from: data!)
                     self.quizes = temp
+                    self.table.reloadData()
                 } catch let jsonErr{
                     print("error for json parsing", jsonErr)
                 }
                 
-                DispatchQueue.main.async{
-                    self.table.reloadData()
-                }
-                
-                let test = ["a","b"]
-                
-                if (test as NSArray).write(toFile: NSHomeDirectory() + "/Documents/data", atomically: true) {
-                    print("did it")
-                } else {
-                    print("failed to write")
-                }
-                
-                }.resume()
-        } else {
-            
-            let alert = UIAlertController(title: "No Internet Connection!", message: "Will now use local data.", preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: "Default action"), style: .`default`, handler: { _ in
-                NSLog("The \"OK\" alert occured.")
-            }))
-            self.present(alert, animated: true, completion: nil)
+                let alert = UIAlertController(title: "No Internet Connection!", message: "Now using local storage", preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: "Default action"), style: .`default`, handler: { _ in
+                    NSLog("The \"OK\" alert occured.")
+                }))
+                self.present(alert, animated: true, completion: nil)
+            }
         }
-        
     }
     
 
@@ -152,10 +196,74 @@ class ViewController: UIViewController , UITableViewDataSource, UITableViewDeleg
     @IBOutlet weak var settings: UIBarButtonItem!
     
     @objc func settingsPressed(sender: UIBarButtonItem) {
-        let alert = UIAlertController(title: "Settings go here", message: "This is an alert.", preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: "Default action"), style: .`default`, handler: { _ in
-            NSLog("The \"OK\" alert occured.")
+        let alert = UIAlertController(title: "Settings", message:"", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: NSLocalizedString("Check Now", comment: "Default action"), style: .`default`, handler: { _ in
+            
+            
+            if alert.textFields![0].text! == "" {
+                print("empty case caught!")
+            } else {
+                let output = UserDefaults.standard.string(forKey: "urltouse") == nil ? "http://tednewardsandbox.site44.com/questions.json" : UserDefaults.standard.string(forKey: "urltouse")
+                UserDefaults.standard.set(alert.textFields![0].text!, forKey: "urltouse")
+                
+                guard let url = URL(string: UserDefaults.standard.string(forKey: "urltouse") == nil ? "http://tednewardsandbox.site44.com/questions.json" : UserDefaults.standard.string(forKey: "urltouse")!) else {return}
+                
+                URLSession.shared.dataTask(with: url) { (data, response, err) in
+                    if data == nil {
+                        UserDefaults.standard.set(output, forKey: "urltouse")
+                        
+                        
+                        let alert = UIAlertController(title: "Warning!", message: "The url you entered was not valid, we are still using the previous one.", preferredStyle: .alert)
+                        alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: "Default action"), style: .`default`, handler: { _ in
+                            NSLog("The \"OK\" alert occured.")
+                        }))
+                        self.present(alert, animated: true, completion: nil)
+                        
+                        
+                        
+                    } else {
+                        guard let data = data else {return}
+                        do{
+                            let temp = try JSONDecoder().decode([Quiz].self, from: data)
+                            self.quizes = temp
+                            
+                            
+                            DispatchQueue.main.async{
+                                self.table.reloadData()
+                            }
+                            
+                            let writable = EncoderForJSON.encodeQuizes(quizes: self.quizes)
+                            
+                            if (writable as NSArray).write(toFile: NSHomeDirectory() + "/Documents/data", atomically: true) {
+                                //let testArr = NSArray(contentsOfFile: NSHomeDirectory() + "/Documents/data")
+                            } else {
+                                print("failed to write")
+                            }
+                        } catch let jsonErr{
+                            UserDefaults.standard.set(output, forKey: "urltouse")
+                            
+                            let alert = UIAlertController(title: "Warning!", message: "The url you entered was not valid, we are still using the previous one.", preferredStyle: .alert)
+                            alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: "Default action"), style: .`default`, handler: { _ in
+                                NSLog("The \"OK\" alert occured.")
+                            }))
+                            self.present(alert, animated: true, completion: nil)
+                        }
+                    }
+                    
+                    
+                    }.resume()
+                
+                //self.url = alert.textFields![0].text!
+                //print(self.url)
+            }
+            
         }))
+        alert.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: "Default action"), style: .`default`, handler: { _ in
+            NSLog("canceled")
+        }))
+        alert.addTextField { (textField : UITextField!) in
+            textField.placeholder = "Enter url"
+        }
         self.present(alert, animated: true, completion: nil)
     }
     
